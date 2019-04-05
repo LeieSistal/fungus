@@ -7,17 +7,17 @@ using System.Collections;
 namespace Fungus
 {
     /// <summary>
-    /// Vector3 variable type.
+    /// Vector3Int variable type.
     /// </summary>
-    [VariableInfo("Other", "Vector3")]
+    [VariableInfo("Other", "Vector3Int")]
     [AddComponentMenu("")]
     [System.Serializable]
-    public class Vector3Variable : VariableBase<Vector3>
+    public class Vector3IntVariable : VariableBase<Vector3Int>
     {
         public static readonly CompareOperator[] compareOperators = { CompareOperator.Equals, CompareOperator.NotEquals };
         public static readonly SetOperator[] setOperators = { SetOperator.Assign, SetOperator.Add, SetOperator.Subtract };
 
-        public virtual bool Evaluate(CompareOperator compareOperator, Vector3 value)
+        public virtual bool Evaluate(CompareOperator compareOperator, Vector3Int value)
         {
             bool condition = false;
 
@@ -36,7 +36,7 @@ namespace Fungus
 
             return condition;
         }
-        public virtual bool Evaluate(CompareOperator compareOperator, FloatVariable value, Vector3field field)
+        public virtual bool Evaluate(CompareOperator compareOperator, IntegerVariable value, Vector3field field)
         {
             bool condition = false;
             if (field == Vector3field.x)
@@ -123,8 +123,7 @@ namespace Fungus
             return condition;
 
         }
-
-        public override void Apply(SetOperator setOperator, Vector3 value)
+        public override void Apply(SetOperator setOperator, Vector3Int value)
         {
             switch (setOperator)
             {
@@ -145,44 +144,44 @@ namespace Fungus
     }
 
     /// <summary>
-    /// Container for a Vector3 variable reference or constant value.
+    /// Container for a Vector3Int variable reference or constant value.
     /// </summary>
     [System.Serializable]
-    public struct Vector3Data
+    public struct Vector3IntData
     {
         [SerializeField]
-        [VariableProperty("<Value>", typeof(Vector3Variable))]
-        public Vector3Variable vector3Ref;
+        [VariableProperty("<Value>", typeof(Vector3IntVariable))]
+        public Vector3IntVariable vector3IntRef;
         
         [SerializeField]
-        public Vector3 vector3Val;
+        public Vector3Int vector3IntVal;
 
-        public Vector3Data(Vector3 v)
+        public Vector3IntData(Vector3Int v)
         {
-            vector3Val = v;
-            vector3Ref = null;
+            vector3IntVal = v;
+            vector3IntRef = null;
         }
         
-        public static implicit operator Vector3(Vector3Data vector3Data)
+        public static implicit operator Vector3Int(Vector3IntData vector3IntData)
         {
-            return vector3Data.Value;
+            return vector3IntData.Value;
         }
 
-        public Vector3 Value
+        public Vector3Int Value
         {
-            get { return (vector3Ref == null) ? vector3Val : vector3Ref.Value; }
-            set { if (vector3Ref == null) { vector3Val = value; } else { vector3Ref.Value = value; } }
+            get { return (vector3IntRef == null) ? vector3IntVal : vector3IntRef.Value; }
+            set { if (vector3IntRef == null) { vector3IntVal = value; } else { vector3IntRef.Value = value; } }
         }
 
         public string GetDescription()
         {
-            if (vector3Ref == null)
+            if (vector3IntRef == null)
             {
-                return vector3Val.ToString();
+                return vector3IntVal.ToString();
             }
             else
             {
-                return vector3Ref.Key;
+                return vector3IntRef.Key;
             }
         }
     }

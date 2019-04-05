@@ -36,6 +36,66 @@ namespace Fungus
 
             return condition;
         }
+        public virtual bool Evaluate(CompareOperator compareOperator, FloatVariable value, Vector2field field)
+        {
+            bool condition = false;
+            if (field == Vector2field.x)
+            {
+                switch (compareOperator)
+                {
+                    case CompareOperator.Equals:
+                        condition = Value.x == value.Value;
+                        break;
+                    case CompareOperator.NotEquals:
+                        condition = Value.x != value.Value;
+                        break;
+                    case CompareOperator.LessThan:
+                        condition = Value.x < value.Value;
+                        break;
+                    case CompareOperator.GreaterThan:
+                        condition = Value.x > value.Value;
+                        break;
+                    case CompareOperator.LessThanOrEquals:
+                        condition = Value.x <= value.Value;
+                        break;
+                    case CompareOperator.GreaterThanOrEquals:
+                        condition = Value.x >= value.Value;
+                        break;
+                    default:
+                        Debug.LogError("The " + compareOperator.ToString() + " comparison operator is not valid.");
+                        break;
+                }
+            }
+            else if (field == Vector2field.y)
+            {
+                switch (compareOperator)
+                {
+                    case CompareOperator.Equals:
+                        condition = Value.y == value.Value;
+                        break;
+                    case CompareOperator.NotEquals:
+                        condition = Value.y != value.Value;
+                        break;
+                    case CompareOperator.LessThan:
+                        condition = Value.y < value.Value;
+                        break;
+                    case CompareOperator.GreaterThan:
+                        condition = Value.y > value.Value;
+                        break;
+                    case CompareOperator.LessThanOrEquals:
+                        condition = Value.y <= value.Value;
+                        break;
+                    case CompareOperator.GreaterThanOrEquals:
+                        condition = Value.y >= value.Value;
+                        break;
+                    default:
+                        Debug.LogError("The " + compareOperator.ToString() + " comparison operator is not valid.");
+                        break;
+                }
+            }
+            return condition;
+
+        }
 
         public override void Apply(SetOperator setOperator, Vector2 value)
         {

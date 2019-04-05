@@ -7,17 +7,17 @@ using System.Collections;
 namespace Fungus
 {
     /// <summary>
-    /// Vector3 variable type.
+    /// Vector2int variable type.
     /// </summary>
-    [VariableInfo("Other", "Vector3")]
+    [VariableInfo("Other", "Vector2Int")]
     [AddComponentMenu("")]
     [System.Serializable]
-    public class Vector3Variable : VariableBase<Vector3>
+    public class Vector2IntVariable : VariableBase<Vector2Int>
     {
         public static readonly CompareOperator[] compareOperators = { CompareOperator.Equals, CompareOperator.NotEquals };
         public static readonly SetOperator[] setOperators = { SetOperator.Assign, SetOperator.Add, SetOperator.Subtract };
 
-        public virtual bool Evaluate(CompareOperator compareOperator, Vector3 value)
+        public virtual bool Evaluate(CompareOperator compareOperator, Vector2Int value)
         {
             bool condition = false;
 
@@ -36,10 +36,10 @@ namespace Fungus
 
             return condition;
         }
-        public virtual bool Evaluate(CompareOperator compareOperator, FloatVariable value, Vector3field field)
+        public virtual bool Evaluate(CompareOperator compareOperator, IntegerVariable value, Vector2field field)
         {
             bool condition = false;
-            if (field == Vector3field.x)
+            if (field == Vector2field.x)
             {
                 switch (compareOperator)
                 {
@@ -66,7 +66,7 @@ namespace Fungus
                         break;
                 }
             }
-            else if (field == Vector3field.y)
+            else if (field == Vector2field.y)
             {
                 switch (compareOperator)
                 {
@@ -93,38 +93,11 @@ namespace Fungus
                         break;
                 }
             }
-            else if (field == Vector3field.z)
-            {
-                switch (compareOperator)
-                {
-                    case CompareOperator.Equals:
-                        condition = Value.z == value.Value;
-                        break;
-                    case CompareOperator.NotEquals:
-                        condition = Value.z != value.Value;
-                        break;
-                    case CompareOperator.LessThan:
-                        condition = Value.z < value.Value;
-                        break;
-                    case CompareOperator.GreaterThan:
-                        condition = Value.z > value.Value;
-                        break;
-                    case CompareOperator.LessThanOrEquals:
-                        condition = Value.z <= value.Value;
-                        break;
-                    case CompareOperator.GreaterThanOrEquals:
-                        condition = Value.z >= value.Value;
-                        break;
-                    default:
-                        Debug.LogError("The " + compareOperator.ToString() + " comparison operator is not valid.");
-                        break;
-                }
-            }
             return condition;
 
         }
 
-        public override void Apply(SetOperator setOperator, Vector3 value)
+        public override void Apply(SetOperator setOperator, Vector2Int value)
         {
             switch (setOperator)
             {
@@ -142,47 +115,48 @@ namespace Fungus
                     break;
             }
         }
+        
     }
 
     /// <summary>
-    /// Container for a Vector3 variable reference or constant value.
+    /// Container for a Vector2Int variable reference or constant value.
     /// </summary>
     [System.Serializable]
-    public struct Vector3Data
+    public struct Vector2IntData
     {
         [SerializeField]
-        [VariableProperty("<Value>", typeof(Vector3Variable))]
-        public Vector3Variable vector3Ref;
+        [VariableProperty("<Value>", typeof(Vector2IntVariable))]
+        public Vector2IntVariable vector2IntRef;
         
         [SerializeField]
-        public Vector3 vector3Val;
+        public Vector2Int vector2IntVal;
 
-        public Vector3Data(Vector3 v)
+        public Vector2IntData(Vector2Int v)
         {
-            vector3Val = v;
-            vector3Ref = null;
+            vector2IntVal = v;
+            vector2IntRef = null;
         }
         
-        public static implicit operator Vector3(Vector3Data vector3Data)
+        public static implicit operator Vector2Int(Vector2IntData vector2IntData)
         {
-            return vector3Data.Value;
+            return vector2IntData.Value;
         }
 
-        public Vector3 Value
+        public Vector2Int Value
         {
-            get { return (vector3Ref == null) ? vector3Val : vector3Ref.Value; }
-            set { if (vector3Ref == null) { vector3Val = value; } else { vector3Ref.Value = value; } }
+            get { return (vector2IntRef == null) ? vector2IntVal : vector2IntRef.Value; }
+            set { if (vector2IntRef == null) { vector2IntVal = value; } else { vector2IntRef.Value = value; } }
         }
 
         public string GetDescription()
         {
-            if (vector3Ref == null)
+            if (vector2IntRef == null)
             {
-                return vector3Val.ToString();
+                return vector2IntVal.ToString();
             }
             else
             {
-                return vector3Ref.Key;
+                return vector2IntRef.Key;
             }
         }
     }
